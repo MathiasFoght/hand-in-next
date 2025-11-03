@@ -1,6 +1,7 @@
 import { apiFetch } from "@/lib/apiClient";
 import { cookies } from "next/headers";
-import type { Client, Program, CreateTrainer, CreateClient } from "@/app/types";
+import type {Client, Program, CreateTrainer, CreateClient, JwtPayload} from "@/app/types";
+import {jwtDecode} from "jwt-decode";
 
 export async function getServerToken(): Promise<string> {
     const cookieStore = await cookies();
@@ -35,7 +36,21 @@ export async function createTrainer(data: CreateTrainer) {
 
 export async function createClient(data: CreateClient) {
     const token = await getServerToken();
-    const body = { ...data, personalTrainerId: 0, accountType: "Client" };
+    if (!token) throw new Error("Ingen token fundet");
+
+    const decoded = jwtDecode<JwtPayload>(token);
+    const trainerId = decoded.UserId ? parseInt(decoded.UserId, 10) : null;
+
+    if (!trainerId) {
+        throw new Error("Kunne ikke finde træner-ID i token");
+    }
+
+    const body = {
+        ...data,
+        personalTrainerId: trainerId,
+        accountType: "Client",
+    };
+
     return apiFetch("/api/Users", token, {
         method: "POST",
         body: JSON.stringify(body),
