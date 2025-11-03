@@ -11,7 +11,7 @@ export default async function TrainersClientsPage() {
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
 
-        clients = await apiFetch("/api/trainers/clients", token);
+        clients = await apiFetch("/api/Users/Clients", token);
     } catch (e: unknown) {
         if (e instanceof Error) error = e.message;
         else error = String(e);
