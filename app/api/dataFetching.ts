@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { apiFetch } from "@/lib/apiClient";
-import type { Client, CreateTrainer, User } from "@/app/types";
+import { cookies } from "next/headers";
+import type { Client, CreateTrainer, User, Program } from "@/app/types";
 
 export async function fetchTrainerClients(): Promise<Client[]> {
     const token =
@@ -10,8 +11,34 @@ export async function fetchTrainerClients(): Promise<Client[]> {
 
     if (!token) throw new Error("Ingen token fundet");
 
-    return apiFetch("/api/trainers/clients", token);
+    return await apiFetch("/api/Users/Clients", token);
 }
+
+export async function fetchPrograms(id: string): Promise<Program[]> {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) throw new Error("Ingen token fundet");
+
+    const programs = await apiFetch(`/api/WorkoutPrograms/client/${id}`, token);
+
+    console.log("programs: ", programs);
+
+    return programs
+}
+
+export async function fetchProgramById(programId: string): Promise<Program> {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) throw new Error("Ingen token fundet");
+
+    const program = await apiFetch(`/api/WorkoutPrograms/${programId}`, token);
+
+    return program
+}
+
+
 
 export async function fetchTrainers(): Promise<User[]> {
     const token =
