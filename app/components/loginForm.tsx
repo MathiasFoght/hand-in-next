@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
+import {login} from "@/lib/auth";
+import {JwtPayload} from "@/app/types";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import {JwtPayload} from "@/app/types";
-import {login} from "@/lib/auth";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -24,14 +24,14 @@ export default function LoginForm() {
             Cookies.set("token", res.jwt, { expires: 1 }); // 1 dag
 
             const decoded = jwtDecode<JwtPayload>(res.jwt);
-            const role = decoded.role;
+            const role = decoded.Role;
 
             if (role === "Manager") {
-                router.push("/admin");
+                router.push("/trainers");
             } else if (role === "PersonalTrainer") {
-                router.push("/trainer");
+                router.push("/trainers/clients");
             } else if (role === "Client") {
-                router.push("/client");
+                router.push("/[id]/programs");
             } else {
                 router.push("/unauthorized");
             }
