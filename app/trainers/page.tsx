@@ -1,10 +1,25 @@
-"use client";
+import { fetchTrainers } from "@/app/api/dataFetching";
 
-import Link from "next/link";
+export default async function TrainersPage() {
+    const trainers = await fetchTrainers();
 
-export default function TrainersPage() {
-    return ( <div className="p-6"> <h1 className="text-2xl font-bold mb-4">Velkommen, PersonalTrainer</h1> <p>Dette er din startside som træner.</p> <ul className="mt-4 space-y-2"> <li> <Link href="/trainers/clients" className="text-blue-600 font-semibold">
-            Se dine klienter </Link> </li> <li> <Link href="/trainers/programs" className="text-blue-600 font-semibold">
-            Se dine programmer </Link> </li> </ul> </div>
+    return (
+        <div className="p-8">
+            <h1 className="text-2xl font-bold mb-4">All Trainers</h1>
+            {trainers.length === 0 ? (
+                <p>No trainers found.</p>
+            ) : (
+                <ul className="space-y-2">
+                    {trainers.map((trainer) => (
+                        <li key={trainer.userId} className="border p-4 rounded">
+                            <p className="font-semibold">
+                                {trainer.firstName} {trainer.lastName}
+                            </p>
+                            <p className="text-sm text-gray-500">{trainer.email}</p>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
     );
 }
