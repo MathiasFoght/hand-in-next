@@ -1,19 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {useEffect} from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import {jwtDecode} from "jwt-decode";
-import {JwtPayload} from "@/app/types";
+import { jwtDecode } from "jwt-decode";
+import { JwtPayload } from "@/app/types";
 
 export default function Home() {
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const token = Cookies.get("token");
 
         if (!token) {
-            router.replace("/login");
+            setLoading(false);
             return;
         }
 
@@ -22,14 +23,12 @@ export default function Home() {
             const role = decoded.Role;
             const exp = decoded.exp ? Number(decoded.exp) : null;
 
-            // token udløbet
             if (exp && exp * 1000 < Date.now()) {
                 Cookies.remove("token");
-                router.replace("/login");
+                setLoading(false);
                 return;
             }
 
-            // Rollebaseret redirect
             switch (role) {
                 case "Manager":
                     router.replace("/trainers");
@@ -47,7 +46,8 @@ export default function Home() {
         } catch (err) {
             console.error("JWT decode error:", err);
             Cookies.remove("token");
-            router.replace("/login");
+        } finally {
+            setLoading(false);
         }
     }, [router]);
 
@@ -98,7 +98,7 @@ export default function Home() {
                 alt="Fitness illustration"
                 style={imageStyle}
             />
-            <p style={{ fontSize: "20px"}}>
+            <p style={{ fontSize: "20px" }}>
                 Velkommen! Kom i gang med dit træningsprogram og nå dine mål.
             </p>
             <button
@@ -111,5 +111,4 @@ export default function Home() {
             </button>
         </div>
     );
-
 }
