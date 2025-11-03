@@ -1,8 +1,55 @@
 "use client";
+
 import { useRouter } from "next/navigation";
+import {useEffect} from "react";
+import Cookies from "js-cookie";
+import {jwtDecode} from "jwt-decode";
+import {JwtPayload} from "@/app/types";
 
 export default function Home() {
     const router = useRouter();
+
+    useEffect(() => {
+        const token = Cookies.get("token");
+
+        if (!token) {
+            router.replace("/login");
+            return;
+        }
+
+        try {
+            const decoded = jwtDecode<JwtPayload>(token);
+            const role = decoded.Role;
+            const exp = decoded.exp ? Number(decoded.exp) : null;
+
+            // token udløbet
+            if (exp && exp * 1000 < Date.now()) {
+                Cookies.remove("token");
+                router.replace("/login");
+                return;
+            }
+
+            // Rollebaseret redirect
+            switch (role) {
+                case "Manager":
+                    router.replace("/trainers");
+                    break;
+                case "PersonalTrainer":
+                    router.replace("/trainers/clients");
+                    break;
+                case "Client":
+                    router.replace("/clients");
+                    break;
+                default:
+                    router.replace("/unauthorized");
+                    break;
+            }
+        } catch (err) {
+            console.error("JWT decode error:", err);
+            Cookies.remove("token");
+            router.replace("/login");
+        }
+    }, [router]);
 
     const handleLoginRedirect = () => {
         router.push("/login");
