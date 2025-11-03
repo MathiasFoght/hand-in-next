@@ -1,39 +1,24 @@
-"use client";
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import { BASE_URL } from "@/app/constants";
+import { cookies } from "next/headers";
+import { apiFetch } from "@/lib/apiClient";
+import { Client as ClientType } from "@/app/types";
 
-interface Client {
-    id: string;
-    name: string;
-}
+export default async function TrainersClientsPage() {
+    let clients: ClientType[] = [];
+    let error: string | null = null;
 
-export default function TrainersClientsPage() {
-    const [clients, setClients] = useState<Client[]>([]);
-    const [error, setError] = useState<string | null>(null);
+    try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("token")?.value;
 
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-
-    useEffect(() => {
-        async function fetchClients() {
-            if (!token) return;
-            try {
-                const res = await fetch(`${BASE_URL}/api/trainers/clients`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                if (!res.ok) throw new Error("Kunne ikke hente klienter");
-                const data: Client[] = await res.json();
-                setClients(data);
-            } catch (e: unknown) {
-                if (e instanceof Error) setError(e.message);
-                else setError(String(e));
-            }
-        }
-        fetchClients();
-    }, [token]);
+        clients = await apiFetch("/api/trainers/clients", token);
+    } catch (e: unknown) {
+        if (e instanceof Error) error = e.message;
+        else error = String(e);
+    }
 
     if (error) return <p className="text-red-600">{error}</p>;
-    if (!clients.length) return <p>Henter klienter...</p>;
+    if (!clients || clients.length === 0) return <p>Ingen klienter fundet.</p>;
 
     return (
         <div className="p-6">

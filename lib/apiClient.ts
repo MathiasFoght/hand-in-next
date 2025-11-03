@@ -1,8 +1,6 @@
 import {BASE_URL} from "@/app/constants";
 
-export async function apiFetch(path: string, options: RequestInit = {}) {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-
+export async function apiFetch(path: string, token?: string, options: RequestInit = {}) {
     const headers = {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
