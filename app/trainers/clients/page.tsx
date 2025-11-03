@@ -8,6 +8,7 @@ import {
     fetchTrainerClients,
     deleteClient,
 } from "@/app/api/client/dataFetching.client";
+import styles from "./trainerClientsPage.module.css"
 
 export default function TrainersClientsPage() {
     const [clients, setClients] = useState<Client[]>([]);
@@ -31,7 +32,8 @@ export default function TrainersClientsPage() {
                     setError(err.message);
                 } else {
                     setError("Kunne ikke hente klienter.");
-                }            }
+                }
+            }
         })();
     }, []);
 
@@ -69,86 +71,84 @@ export default function TrainersClientsPage() {
     };
 
     return (
-        <div className="p-6 space-y-8">
-            <h1 className="text-2xl font-bold">Opret ny klient</h1>
+        <div className={styles.container}>
+            <section className={styles.card}>
+                <h1 className={styles.heading}>Opret ny klient</h1>
 
-            <form
-                onSubmit={handleSubmit}
-                className="border p-4 rounded bg-gray-50 space-y-4"
-            >
-                <h2 className="font-semibold text-lg">Opret ny klient</h2>
-                <div className="grid grid-cols-2 gap-2">
-                    <input
-                        type="text"
-                        placeholder="Fornavn"
-                        value={form.firstName}
-                        onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-                        className="border p-2 rounded"
-                        required
-                    />
-                    <input
-                        type="text"
-                        placeholder="Efternavn"
-                        value={form.lastName}
-                        onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-                        className="border p-2 rounded"
-                        required
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="border p-2 rounded col-span-2"
-                        required
-                    />
-                    <input
-                        type="password"
-                        placeholder="Adgangskode"
-                        value={form.password}
-                        onChange={(e) => setForm({ ...form, password: e.target.value })}
-                        className="border p-2 rounded col-span-2"
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-                >
-                    {loading ? "Opretter..." : "Opret klient"}
-                </button>
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <div className={styles.formGrid}>
+                        <input
+                            type="text"
+                            placeholder="Fornavn"
+                            value={form.firstName}
+                            onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                            className={styles.input}
+                            required
+                        />
+                        <input
+                            type="text"
+                            placeholder="Efternavn"
+                            value={form.lastName}
+                            onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                            className={styles.input}
+                            required
+                        />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={form.email}
+                            onChange={(e) => setForm({ ...form, email: e.target.value })}
+                            className={`${styles.input} ${styles.full}`}
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Adgangskode"
+                            value={form.password}
+                            onChange={(e) => setForm({ ...form, password: e.target.value })}
+                            className={`${styles.input} ${styles.full}`}
+                            required
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={styles.submitBtn}
+                    >
+                        {loading ? "Opretter..." : "Opret klient"}
+                    </button>
 
-                {error && <p className="text-red-600">{error}</p>}
-                {success && <p className="text-green-600">{success}</p>}
-            </form>
+                    {error && <p className={styles.error}>{error}</p>}
+                    {success && <p className={styles.success}>{success}</p>}
+                </form>
+            </section>
 
-            <h1 className="text-2xl font-bold">Dine klienter</h1>
-            {clients.length === 0 ? (
-                <p>Ingen klienter fundet.</p>
-            ) : (
-                <ul className="space-y-2">
-                    {clients.map((c) => (
-                        <li
-                            key={c.userId}
-                            className="border p-3 rounded flex justify-between items-center"
-                        >
-                            <Link
-                                href={`/trainers/clients/${c.userId}`}
-                                className="text-blue-600 font-semibold hover:underline"
-                            >
-                                {c.firstName} {c.lastName}
-                            </Link>
-                            <button
-                                onClick={() => handleDelete(c.userId)}
-                                className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                            >
-                                Slet
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <section className={styles.card}>
+                <h2 className={styles.heading}>Dine klienter</h2>
+
+                {clients.length === 0 ? (
+                    <p>Ingen klienter fundet.</p>
+                ) : (
+                    <ul className={styles.clientList}>
+                        {clients.map((c) => (
+                            <li key={c.userId} className={styles.clientItem}>
+                                <Link
+                                    href={`/trainers/clients/${c.userId}`}
+                                    className={styles.clientLink}
+                                >
+                                    {c.firstName} {c.lastName}
+                                </Link>
+                                <button
+                                    onClick={() => handleDelete(c.userId)}
+                                    className={styles.deleteBtn}
+                                >
+                                    Slet
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </section>
         </div>
     );
 }

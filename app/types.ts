@@ -25,7 +25,6 @@ export interface Exercise {
     name: string;
     description: string;
     sets: number;
-    /** Either repetitions OR time (seconds) */
     reps?: number;
     time?: number;
 }

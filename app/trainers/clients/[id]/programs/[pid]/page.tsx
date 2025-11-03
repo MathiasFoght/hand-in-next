@@ -25,8 +25,11 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
                 <p>Ingen øvelser tilføjet endnu.</p>
             ) : (
                 <ul className="space-y-3">
-                    {program.exercises.map((exercise) => (
-                        <li key={exercise.id} className="border p-4 rounded-lg">
+                    {program.exercises.map((exercise, index) => (
+                        <li
+                            key={exercise.id ?? `${exercise.name}-${index}`}
+                            className="border p-4 rounded-lg"
+                        >
                             <h2 className="text-xl font-semibold">{exercise.name}</h2>
                             <p className="text-gray-600">{exercise.description}</p>
                             {(exercise.sets || exercise.reps || exercise.time) && (
