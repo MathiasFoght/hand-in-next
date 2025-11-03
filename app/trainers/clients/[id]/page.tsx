@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Program } from "@/app/types";
-import { fetchPrograms } from "@/app/api/dataFetching";
+import { fetchPrograms } from "@/app/api/server/dataFetching.server";
 
 export default async function ClientProgramsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;

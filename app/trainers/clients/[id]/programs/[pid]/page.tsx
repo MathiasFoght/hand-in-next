@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchProgramById } from "@/app/api/dataFetching";
+import { fetchProgramById } from "@/app/api/server/dataFetching.server";
 import { Program } from "@/app/types";
 
 export default async function ProgramDetailPage({ params }: { params: Promise<{ id: string; pid: string }> }) {
