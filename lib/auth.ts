@@ -28,7 +28,7 @@ export function getUserRole(): string | null {
     if (!token) return null;
     try {
         const decoded = jwtDecode<JwtPayload>(token);
-        return decoded.role || null;
+        return decoded.Role || null;
     } catch {
         return null;
     }
@@ -39,7 +39,7 @@ export function isLoggedIn(): boolean {
     if (!token) return false;
     try {
         const { exp } = jwtDecode<JwtPayload>(token);
-        return !!exp && exp * 1000 > Date.now();
+        return !!exp && parseInt(exp) * 1000 > Date.now();
     } catch {
         return false;
     }

@@ -1,10 +1,12 @@
 export type JwtPayload = {
     sub?: string;
     email?: string;
-    role?: string;
-    exp?: number;
-// types.ts
-}
+    Role?: string; // Matcher backend JWT
+    exp?: string; // JWT giver exp som string
+    nbf?: string;
+    UserId?: string;
+    GroupId?: string;
+};
 
 /** A client for a personal trainer */
 export interface Client {

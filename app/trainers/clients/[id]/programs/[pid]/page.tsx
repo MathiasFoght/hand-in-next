@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import type { Program, Exercise } from "@/app/types";
-
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE!;
+import {BASE_URL} from "@/app/constants";
 
 export default function ClientProgramDetailPage() {
     const { pid } = useParams<{ pid: string }>();
@@ -17,7 +16,7 @@ export default function ClientProgramDetailPage() {
         async function fetchProgram() {
             if (!token || !pid) return;
             try {
-                const res = await fetch(`${API_BASE}/api/programs/${pid}`, {
+                const res = await fetch(`${BASE_URL}/api/programs/${pid}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 if (!res.ok) throw new Error("Kunne ikke hente program");
