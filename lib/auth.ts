@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import {BASE_URL} from "@/app/constants";
 import {JwtPayload} from "@/app/types";
+import Cookies from "js-cookie";
 
 export async function login(email: string, password: string) {
     const res = await fetch(`${BASE_URL}/api/Users/login`, {
@@ -43,4 +44,9 @@ export function isLoggedIn(): boolean {
     } catch {
         return false;
     }
+}
+
+export function logout() {
+    Cookies.remove("token");
+    window.location.href = "/";
 }

@@ -13,9 +13,10 @@ export async function apiFetch(path: string, token?: string, options: RequestIni
     });
 
     if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
-    }
+        const errorText = await res.text();
+        console.error("API error response:", errorText);
+        throw new Error(`API error: ${res.status}`);    }
 
-    return res.json();
+    return res.json().catch(() => ({}));
 }
 
