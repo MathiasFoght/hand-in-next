@@ -1,0 +1,390 @@
+.loadingContainer {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+}
+
+.loadingContent {
+    text-align: center;
+}
+
+.loadingContent p {
+    margin-top: 1rem;
+    color: #4b5563;
+}
+
+.spinner {
+    margin: 0 auto;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid #e5e7eb;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.pageContainer {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+}
+
+.contentWrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .contentWrapper {
+        padding: 2rem;
+    }
+}
+
+/* Header */
+.header {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border: 1px solid #f3f4f6;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.subtitle {
+    color: #4b5563;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+/* Grid Layout */
+.gridLayout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .gridLayout {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
+.formColumn {
+    position: relative;
+}
+
+.formCard {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border: 1px solid #f3f4f6;
+}
+
+@media (min-width: 1024px) {
+    .formCard {
+        position: sticky;
+        top: 2rem;
+    }
+}
+
+.formHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.iconCircle {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white;
+}
+
+.formTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+/* Form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
+}
+
+.input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.input:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.submitButton {
+    width: 100%;
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+}
+
+.submitButton:hover {
+    background: linear-gradient(to right, #1d4ed8, #4338ca);
+    transform: scale(1.02);
+}
+
+.errorMessage {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.successMessage {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #15803d;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.listCard {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f3f4f6;
+    overflow: hidden;
+}
+
+.listHeader {
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    padding: 1.5rem;
+}
+
+.listTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.listIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.listContent {
+    padding: 1.5rem;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.emptyIcon {
+    width: 4rem;
+    height: 4rem;
+    background-color: #f3f4f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+}
+
+.emptyIcon svg {
+    width: 2rem;
+    height: 2rem;
+    color: #9ca3af;
+}
+
+.emptyText {
+    color: #6b7280;
+    font-weight: 500;
+    margin: 0;
+}
+
+.emptySubtext {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.trainersList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.trainerCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    background: linear-gradient(to right, white, #f9fafb);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s;
+}
+
+.trainerCard:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: #93c5fd;
+}
+
+.trainerInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.trainerDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.trainerName {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1.125rem;
+    margin: 0;
+}
+
+.trainerEmail {
+    font-size: 0.875rem;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0.25rem 0;
+}
+
+.emailIcon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+}
+
+.deleteButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    background-color: #ef4444;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.deleteButton:hover {
+    background-color: #dc2626;
+    transform: scale(1.05);
+}
+
+.deleteIcon {
+    width: 1rem;
+    height: 1rem;
+}
+
+@media (max-width: 640px) {
+    .trainerCard {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .deleteButton {
+        width: 100%;
+        justify-content: center;
+    }
+}

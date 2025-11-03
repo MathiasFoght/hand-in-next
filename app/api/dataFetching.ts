@@ -1,10 +1,12 @@
+import Cookies from "js-cookie";
 import { apiFetch } from "@/lib/apiClient";
-import {Client, User} from "@/app/types";
-import { cookies } from "next/headers";
+import type { Client, CreateTrainer, User } from "@/app/types";
 
 export async function fetchTrainerClients(): Promise<Client[]> {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const token =
+        typeof window === "undefined"
+            ? undefined
+            : Cookies.get("token");
 
     if (!token) throw new Error("Ingen token fundet");
 
@@ -12,18 +14,43 @@ export async function fetchTrainerClients(): Promise<Client[]> {
 }
 
 export async function fetchTrainers(): Promise<User[]> {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const token =
+        typeof window === "undefined"
+            ? undefined
+            : Cookies.get("token");
 
-    if (!token) {
-        throw new Error("Ingen token fundet");
-    }
+    if (!token) throw new Error("Ingen token fundet");
 
-    const users: User[] = await apiFetch("/api/Users", token, { method: "GET" });
+    const users: User[] = await apiFetch("/api/Users", token, {
+        method: "GET",
+    });
 
-    const trainers = users.filter(
-        (user) => user.accountType === "PersonalTrainer"
-    );
+    return users.filter((u) => u.accountType === "PersonalTrainer");
+}
 
-    return trainers;
+export async function createTrainer(data: CreateTrainer) {
+    const token =
+        typeof window === "undefined"
+            ? undefined
+            : Cookies.get("token");
+
+    if (!token) throw new Error("Ingen token fundet");
+
+    const body = {
+        ...data,
+        personalTrainerId: 0,
+        accountType: "PersonalTrainer",
+    };
+
+    return apiFetch("/api/Users", token, {
+        method: "POST",
+        body: JSON.stringify(body),
+    });
+}
+
+export async function deleteTrainer(id: number) {
+    const token = Cookies.get("token");
+    if (!token) throw new Error("Ingen token fundet");
+
+    return apiFetch(`/api/Users/${id}`, token, { method: "DELETE" });
 }

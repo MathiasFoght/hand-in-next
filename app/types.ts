@@ -46,3 +46,11 @@ export interface User {
     personalTrainerId: number | null;
     accountType: "PersonalTrainer" | "Client";
 }
+
+/** Creating a new trainer */
+export interface CreateTrainer {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+}
