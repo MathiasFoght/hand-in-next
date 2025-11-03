@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { jwtDecode } from "jwt-decode";
 import {JwtPayload} from "@/app/types";
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
 
     if (!token && !req.nextUrl.pathname.startsWith("/login")) {
