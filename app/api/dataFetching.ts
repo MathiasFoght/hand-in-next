@@ -4,15 +4,14 @@ import { cookies } from "next/headers";
 import type { Client, CreateTrainer, User, Program } from "@/app/types";
 
 export async function fetchTrainerClients(): Promise<Client[]> {
-    const token =
-        typeof window === "undefined"
-            ? undefined
-            : Cookies.get("token");
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
 
     if (!token) throw new Error("Ingen token fundet");
 
     return await apiFetch("/api/Users/Clients", token);
 }
+
 
 export async function fetchPrograms(id: string): Promise<Program[]> {
     const cookieStore = await cookies();

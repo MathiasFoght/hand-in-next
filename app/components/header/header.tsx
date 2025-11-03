@@ -8,7 +8,9 @@ export default function Header() {
     const pathname = usePathname();
 
     const hideHeader =
-        pathname.startsWith("/login") || pathname.startsWith("/unauthorized");
+        pathname === "/" ||
+        pathname.startsWith("/login") ||
+        pathname.startsWith("/unauthorized");
 
     if (hideHeader) return null;
 

@@ -8,7 +8,7 @@ export default async function TrainersClientsPage() {
 
     try {
         clients = await fetchTrainerClients();
-        console.log(clients); // Ser hvad vi får fra API
+        console.log(clients);
     } catch (e: unknown) {
         if (e instanceof Error) error = e.message;
         else error = String(e);
