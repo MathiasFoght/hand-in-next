@@ -1,11 +1,9 @@
+export type JwtPayload = {
+    sub?: string;
+    email?: string;
+    role?: string;
+    exp?: number;
 // types.ts
-
-/** Basic user info (Trainer, Manager, or Client) */
-export interface User {
-    id: string;
-    name: string;
-    email: string;
-    role: "manager" | "trainer" | "client";
 }
 
 /** A client for a personal trainer */
