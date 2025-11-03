@@ -35,3 +35,14 @@ export interface Program {
     clientId: string;
     exercises: Exercise[];
 }
+
+/** A User */
+export interface User {
+    userId: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    personalTrainerId: number | null;
+    accountType: "PersonalTrainer" | "Client";
+}

@@ -5,36 +5,35 @@ import type { JwtPayload } from "@/app/types";
 
 export function proxy(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
-    if (!token) {
-        console.log("Ingen token, redirect til /login");
-        return NextResponse.redirect(new URL("/login", req.url));
-    }
+    if (!token) return NextResponse.redirect(new URL("/login", req.url));
 
     try {
-        const decoded = jwtDecode(token) as JwtPayload;
-        console.log("Decoded JWT:", decoded);
+        const decoded = jwtDecode<JwtPayload>(token);
+        const role = decoded.Role || decoded.Role;
+        const exp = decoded.exp ? Number(decoded.exp) : null;
 
-        const role = decoded.Role;
-        const exp = decoded.exp != null ? Number(decoded.exp) : null;
-
-        // Token udløbstjek
-        if (exp !== null && !isNaN(exp) && exp * 1000 < Date.now()) {
-            console.log("Token udløbet, redirect til /login");
+        // token expired
+        if (exp && exp * 1000 < Date.now()) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
 
-        // Rollebaseret adgangskontrol
-        const roleMap: Record<string, string> = {
-            "/trainers": "PersonalTrainer",
-            "/clients": "Client",
-            "/admin": "Manager"
-        };
+        // Manager adgang til alt
+        if (role === "Manager") return NextResponse.next();
 
-        for (const pathPrefix in roleMap) {
-            if (req.nextUrl.pathname.startsWith(pathPrefix) && role !== roleMap[pathPrefix]) {
-                console.log(`Adgang nægtet til ${pathPrefix} for rolle:`, role);
-                return NextResponse.redirect(new URL("/unauthorized", req.url));
+        // PersonalTrainer adgang
+        if (role === "PersonalTrainer") {
+            if (req.nextUrl.pathname.startsWith("/trainers")) {
+                return NextResponse.next();
             }
+            return NextResponse.redirect(new URL("/unauthorized", req.url));
+        }
+
+        // Client adgang
+        if (role === "Client") {
+            if (req.nextUrl.pathname.startsWith("/clients")) {
+                return NextResponse.next();
+            }
+            return NextResponse.redirect(new URL("/unauthorized", req.url));
         }
 
     } catch (e) {
@@ -42,11 +41,9 @@ export function proxy(req: NextRequest) {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    console.log("Adgang tilladt, fortsætter til side");
     return NextResponse.next();
-
 }
 
 export const config = {
-    matcher: ["/trainers/:path*", "/clients/:path*", "/admin/:path*"]
+    matcher: ["/trainers/:path*", "/clients/:path*"],
 };

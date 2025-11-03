@@ -18,3 +18,4 @@ export async function apiFetch(path: string, token?: string, options: RequestIni
 
     return res.json();
 }
+
