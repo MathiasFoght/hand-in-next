@@ -10,10 +10,13 @@ export type JwtPayload = {
 
 /** A client for a personal trainer */
 export interface Client {
-    id: string;
-    name: string;
+    userId: number;
+    firstName: string;
+    lastName: string;
     email: string;
-    trainerId?: string; // optional — depends on backend model
+    password?: string;
+    personalTrainerId?: number;
+    accountType: "Client";
 }
 
 /** A workout exercise belonging to a program */
@@ -29,7 +32,7 @@ export interface Exercise {
 
 /** A workout program assigned to a client */
 export interface Program {
-    id: string;
+    workoutProgramId: string;
     name: string;
     description: string;
     clientId: string;

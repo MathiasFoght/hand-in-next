@@ -1,17 +1,14 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { apiFetch } from "@/lib/apiClient";
-import { Client as ClientType } from "@/app/types";
+import { fetchTrainerClients } from "@/app/api/dataFetching";
+import { Client} from "@/app/types";
 
 export default async function TrainersClientsPage() {
-    let clients: ClientType[] = [];
+    let clients: Client[] = [];
     let error: string | null = null;
 
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("token")?.value;
-
-        clients = await apiFetch("/api/Users/Clients", token);
+        clients = await fetchTrainerClients();
+        console.log(clients); // Ser hvad vi får fra API
     } catch (e: unknown) {
         if (e instanceof Error) error = e.message;
         else error = String(e);
@@ -25,9 +22,9 @@ export default async function TrainersClientsPage() {
             <h1 className="text-2xl font-bold mb-4">Dine klienter</h1>
             <ul className="space-y-2">
                 {clients.map((c) => (
-                    <li key={c.id} className="border p-3 rounded">
-                        <Link href={`/trainers/clients/${c.id}`} className="text-blue-600 font-semibold">
-                            {c.name}
+                    <li key={c.userId} className="border p-3 rounded">
+                        <Link href={`/trainers/clients/${c.userId}`} className="text-blue-600 font-semibold">
+                            {c.firstName} {c.lastName}
                         </Link>
                     </li>
                 ))}
