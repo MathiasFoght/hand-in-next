@@ -1,0 +1,92 @@
+.container {
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #4ade80, #3b82f6);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease;
+    color: white;
+}
+
+.container:hover {
+    transform: translateY(-2px);
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.listItem {
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.listItem:hover {
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transform: scale(1.02);
+}
+
+.link {
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    transition: text-shadow 0.2s ease;
+}
+
+.link:hover {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+.backLink {
+    color: white;
+    margin-top: 1rem;
+    display: inline-block;
+    font-weight: 600;
+    transition: text-shadow 0.2s ease;
+}
+
+.backLink:hover {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+.exerciseName {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.exerciseDescription {
+    color: #e0f2fe;
+    margin-bottom: 0.25rem;
+}
+
+.exerciseDetails strong {
+    margin-right: 0.25rem;
+    color: #bae6fd;
+}
+
+.error {
+    color: #f87171;
+    font-weight: 600;
+    background-color: rgba(248, 113, 113, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}

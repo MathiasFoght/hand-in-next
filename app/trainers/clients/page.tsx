@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { fetchTrainerClients } from "@/app/api/dataFetching";
-import { Client} from "@/app/types";
+import { Client } from "@/app/types";
+import styles from "./trainersClientsPage.module.css";
 
 export default async function TrainersClientsPage() {
     let clients: Client[] = [];
@@ -14,16 +15,16 @@ export default async function TrainersClientsPage() {
         else error = String(e);
     }
 
-    if (error) return <p className="text-red-600">{error}</p>;
+    if (error) return <p className={styles.error}>{error}</p>;
     if (!clients || clients.length === 0) return <p>Ingen klienter fundet.</p>;
 
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Dine klienter</h1>
-            <ul className="space-y-2">
+        <div className={styles.container}>
+            <h1 className={styles.title}>Dine klienter</h1>
+            <ul className={styles.list}>
                 {clients.map((c) => (
-                    <li key={c.userId} className="border p-3 rounded">
-                        <Link href={`/trainers/clients/${c.userId}`} className="text-blue-600 font-semibold">
+                    <li key={c.userId} className={styles.listItem}>
+                        <Link href={`/trainers/clients/${c.userId}`} className={styles.link}>
                             {c.firstName} {c.lastName}
                         </Link>
                     </li>
@@ -31,4 +32,5 @@ export default async function TrainersClientsPage() {
             </ul>
         </div>
     );
+
 }
