@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchTrainerClients } from "@/app/api/dataFetching";
+import {fetchTrainerClients} from "@/app/api/client/dataFetching.client";
 import { Client } from "@/app/types";
 import styles from "./trainersClientsPage.module.css";
 

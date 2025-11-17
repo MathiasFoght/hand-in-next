@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Program } from "@/app/types";
-import { fetchPrograms, fetchProgramById } from "@/app/api/dataFetching";
+import { fetchPrograms} from "@/app/api/server/dataFetching.server";
+import {fetchProgramById} from "@/app/api/server/dataFetching.server";
 import styles from '@/app/trainers/clients/[id]/programs/clientProgramsPage.module.css'
 
 export default async function ClientProgramsPage({ params }: { params: Promise<{ id: string }> }) {
