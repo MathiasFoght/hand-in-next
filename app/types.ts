@@ -1,8 +1,8 @@
 export type JwtPayload = {
     sub?: string;
     email?: string;
-    Role?: string; // Matcher backend JWT
-    exp?: string; // JWT giver exp som string
+    Role?: string;
+    exp?: string;
     nbf?: string;
     UserId?: string;
     GroupId?: string;
@@ -25,7 +25,6 @@ export interface Exercise {
     name: string;
     description: string;
     sets: number;
-    /** Either repetitions OR time (seconds) */
     reps?: number;
     time?: number;
 }
@@ -56,4 +55,13 @@ export interface CreateTrainer {
     lastName: string;
     email: string;
     password: string;
+}
+
+export interface CreateClient {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    personalTrainerId?: number;
+    accountType?: "Client";
 }

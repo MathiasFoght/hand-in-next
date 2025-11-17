@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import {useState} from "react";
 import {login} from "@/lib/auth";
 import {JwtPayload} from "@/app/types";
 import { useRouter } from "next/navigation";

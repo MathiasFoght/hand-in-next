@@ -9,28 +9,33 @@ export function proxy(req: NextRequest) {
 
     try {
         const decoded = jwtDecode<JwtPayload>(token);
-        const role = decoded.Role || decoded.Role;
+        const role = decoded.Role;
         const exp = decoded.exp ? Number(decoded.exp) : null;
+        const path = req.nextUrl.pathname;
 
-        // token expired
         if (exp && exp * 1000 < Date.now()) {
             return NextResponse.redirect(new URL("/login", req.url));
         }
 
-        // Manager adgang til alt
-        if (role === "Manager") return NextResponse.next();
-
-        // PersonalTrainer adgang
-        if (role === "PersonalTrainer") {
-            if (req.nextUrl.pathname.startsWith("/trainers")) {
+        if (role === "Manager") {
+            if (path === "/trainers") {
                 return NextResponse.next();
             }
             return NextResponse.redirect(new URL("/unauthorized", req.url));
         }
 
-        // Client adgang
+        if (role === "PersonalTrainer") {
+            if (path.startsWith("/trainers/clients")) {
+                return NextResponse.next();
+            }
+            if (path === "/trainers") {
+                return NextResponse.redirect(new URL("/trainers/clients", req.url));
+            }
+            return NextResponse.redirect(new URL("/unauthorized", req.url));
+        }
+
         if (role === "Client") {
-            if (req.nextUrl.pathname.startsWith("/clients")) {
+            if (path.startsWith("/clients")) {
                 return NextResponse.next();
             }
             return NextResponse.redirect(new URL("/unauthorized", req.url));

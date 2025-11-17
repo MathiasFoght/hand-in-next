@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { User } from "@/app/types";
-import { fetchTrainers, createTrainer, deleteTrainer } from "@/app/api/dataFetching";
 import styles from "./trainers.module.css";
+import {createTrainer, deleteTrainer, fetchTrainers} from "@/app/api/client/dataFetching.client";
 
 export default function TrainersPage() {
     const [trainers, setTrainers] = useState<User[]>([]);
