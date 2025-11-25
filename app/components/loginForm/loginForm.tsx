@@ -34,7 +34,7 @@ export default function LoginForm() {
             } else if (role === "PersonalTrainer") {
                 router.push("/trainers/clients");
             } else if (role === "Client") {
-                router.push("/[id]/programs");
+                router.push(`/clients/${decoded.UserId}/programs`);
             } else {
                 router.push("/unauthorized");
             }

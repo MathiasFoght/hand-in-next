@@ -8,7 +8,6 @@ export type JwtPayload = {
     GroupId?: string;
 };
 
-/** A client for a personal trainer */
 export interface Client {
     userId: number;
     firstName: string;
@@ -19,7 +18,6 @@ export interface Client {
     accountType: "Client";
 }
 
-/** A workout exercise belonging to a program */
 export interface Exercise {
     id: string;
     name: string;
@@ -29,7 +27,6 @@ export interface Exercise {
     time?: number;
 }
 
-/** A workout program assigned to a client */
 export interface Program {
     workoutProgramId: string;
     name: string;
@@ -38,7 +35,12 @@ export interface Program {
     exercises: Exercise[];
 }
 
-/** A User */
+export interface CreateProgramData {
+    clientId: string;
+    name: string;
+    description: string;
+}
+
 export interface User {
     userId: number;
     firstName: string;
@@ -49,7 +51,6 @@ export interface User {
     accountType: "PersonalTrainer" | "Client";
 }
 
-/** Creating a new trainer */
 export interface CreateTrainer {
     firstName: string;
     lastName: string;

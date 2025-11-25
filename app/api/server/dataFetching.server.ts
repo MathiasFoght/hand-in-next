@@ -15,6 +15,11 @@ export async function fetchTrainerClients(): Promise<Client[]> {
     return apiFetch("/api/Users/Clients", token);
 }
 
+export async function fetchProgramsClient(clientId: string): Promise<Program[]> {
+    const token = await getServerToken();
+    return apiFetch(`/api/WorkoutPrograms/client/${clientId}`, token);
+}
+
 export async function fetchPrograms(id: string): Promise<Program[]> {
     const token = await getServerToken();
     return apiFetch(`/api/WorkoutPrograms/client/${id}`, token);

@@ -35,9 +35,19 @@ export function proxy(req: NextRequest) {
         }
 
         if (role === "Client") {
-            if (path.startsWith("/clients")) {
+            const clientId = decoded.UserId;
+            const path = req.nextUrl.pathname;
+
+            // Hvis de prøver /clients -> redirect med ID
+            if (path === "/clients" || path === "/clients/") {
+                return NextResponse.redirect(new URL(`/clients/${clientId}/programs`, req.url));
+            }
+
+            // Hvis allerede på /clients/{id}/... -> next
+            if (path.startsWith(`/clients/${clientId}`)) {
                 return NextResponse.next();
             }
+
             return NextResponse.redirect(new URL("/unauthorized", req.url));
         }
 
