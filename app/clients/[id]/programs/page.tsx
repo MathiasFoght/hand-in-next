@@ -22,9 +22,9 @@ export default function ClientProgramsPage() {
             return;
         }
 
-        async function loadPrograms() {
+        async function loadPrograms(currentClientId: string) {
             try {
-                const data = await fetchProgramsClient(clientId);
+                const data = await fetchProgramsClient(currentClientId);
                 setPrograms(data);
                 if (data.length === 1) {
                     setSelectedProgram(data[0]);
@@ -37,7 +37,7 @@ export default function ClientProgramsPage() {
             }
         }
 
-        loadPrograms();
+        loadPrograms(clientId);
     }, [clientId]);
 
     if (loading) return <p className={`${styles.info} text-lg`}>Indlæser programmer...</p>;
